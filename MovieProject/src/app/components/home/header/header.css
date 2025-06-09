@@ -1,21 +1,24 @@
 
 #cabecalho{
-
-  background-color: #131313;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #101211;
   width: 100%;
   height: 20%;
 }
 
 #logo{
   width: 9.6%;
+  position: relative;
+  right: 35%;
 }
 
 #caixa-busca{
-  position: relative;
-  left: 460px;
-  bottom: 60px;
-  width: 20%;
-  height: 20%;
+  width: 15%;
+  height: 40px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  position: relative;
+  right: 5%;
 }
