@@ -1,0 +1,11 @@
+.header-toolbar {
+  position: sticky; top: 0; z-index: 1000;
+  flex-wrap: wrap; gap: .5rem;
+
+  .brand   { font-weight: 600; cursor: pointer; }
+  .spacer  { flex: 1 1 auto; }
+
+  button.active { font-weight: 600; text-decoration: underline; }
+
+  .search-form { width: 260px; @media (max-width: 599px) { width: 100%; } }
+}

@@ -1,0 +1,21 @@
+<mat-toolbar color="primary" class="header-toolbar">
+  <span routerLink="/" class="brand">🎬 Catálogo de Filmes</span>
+
+  <span class="spacer"></span>
+
+  <button mat-button routerLink="/movies" routerLinkActive="active">Filmes</button>
+  <button mat-button routerLink="/favorites" routerLinkActive="active">
+    <mat-icon>favorite</mat-icon>
+    Favoritos
+  </button>
+
+  <form class="search-form" (ngSubmit)="search(query)">
+    <mat-form-field appearance="outline" floatLabel="auto">
+      <mat-label>Pesquisar título…</mat-label>
+      <input matInput type="text" [(ngModel)]="query" name="query"/>
+      <button mat-icon-button matSuffix aria-label="Buscar" type="submit">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+</mat-toolbar>
