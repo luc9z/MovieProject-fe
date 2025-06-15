@@ -8,9 +8,9 @@ import { FooterComponent } from '../components/footer/footer';
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, FooterComponent],
   template: `
-    <app-header></app-header>
-    <router-outlet></router-outlet>
-    <app-footer></app-footer>
+    <app-header />
+    <router-outlet />
+    <app-footer />
   `,
 })
 export class HomePage {}

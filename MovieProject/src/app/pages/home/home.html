@@ -13,6 +13,22 @@
   </div>
 
   <div class="movies-grid">
-    <p style="color: #aaa;">[Cards de filmes aparecerão aqui futuramente]</p>
+    @for (filme of paginatedFilmes; track filme.id) {
+      <a [routerLink]="['/filmes', filme.id]" class="movie-card">
+      <img [src]="filme.imagemUrl" alt="{{ filme.titulo }}" class="movie-image" />
+        <div class="movie-info">
+          <h2>{{ filme.titulo }}</h2>
+          <p><strong>Gênero:</strong> {{ filme.genero }}</p>
+          <p><strong>Ano:</strong> {{ filme.anoLancamento }}</p>
+          <p><strong>Nota:</strong> {{ filme.notaMedia }} ⭐</p>
+        </div>
+      </a>
+    }
+  </div>
+
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
+    <span>Página {{ currentPage }}</span>
+    <button (click)="nextPage()" [disabled]="filmes.length <= currentPage * itemsPerPage">Próxima</button>
   </div>
 </section>

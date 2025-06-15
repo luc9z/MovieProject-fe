@@ -1,1 +1,26 @@
-<p>movie works!</p>
+<section class="movie-detail">
+  <h1 *ngIf="erro">Filme não encontrado ou erro ao carregar.</h1>
+  <h1 *ngIf="!filme && !erro">Carregando filme...</h1>
+
+  <ng-container *ngIf="filme && !erro">
+    <img
+      [src]="filme.imagemUrl"
+      alt="{{ filme.titulo }}"
+      class="movie-banner"
+      width="100%"
+      height="auto"
+    />
+    <h1>{{ filme.titulo }}</h1>
+
+    <div class="movie-meta">
+      <p><strong>Gênero:</strong> {{ filme.genero }}</p>
+      <p><strong>Ano:</strong> {{ filme.anoLancamento }}</p>
+      <p><strong>Nota:</strong> {{ filme.notaMedia }} ⭐</p>
+    </div>
+
+    <div class="movie-sinopse">
+      <h2>Sinopse</h2>
+      <p>{{ filme.sinopse }}</p>
+    </div>
+  </ng-container>
+</section>

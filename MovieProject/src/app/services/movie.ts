@@ -6,7 +6,7 @@ export interface Movie {
   id: number;
   titulo: string;
   genero: string;
-  ano: number;
+  anoLancamento: number;
   sinopse: string;
   notaMedia: number;
   imagemUrl: string;
@@ -23,7 +23,7 @@ export interface Avaliacao {
   providedIn: 'root'
 })
 export class MovieService {
-  private apiUrl = 'http://localhost:8080/api/filmes';
+  private apiUrl = 'http://localhost:8080/filmes';
 
   constructor(private http: HttpClient) {}
 
@@ -43,6 +43,7 @@ export class MovieService {
   getFilmeById(id: number): Observable<Movie> {
     return this.http.get<Movie>(`${this.apiUrl}/${id}`);
   }
+
 
   getAvaliacoes(idFilme: number): Observable<Avaliacao[]> {
     return this.http.get<Avaliacao[]>(`${this.apiUrl}/${idFilme}/avaliacoes`);
