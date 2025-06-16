@@ -1,27 +1,45 @@
 import { Component, OnInit } from '@angular/core';
 import { MovieService, Movie } from '../../services/movie';
-import { RouterModule, RouterLink } from '@angular/router';
-
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './home.html',
-  styleUrl: './home.css',
-  imports: [RouterLink, RouterModule]
+  styleUrls: ['./home.css']
 })
 export class HomeComponent implements OnInit {
   filmes: Movie[] = [];
   currentPage = 1;
   itemsPerPage = 16;
+  searchTerm: string = '';
 
-  constructor(private movieService: MovieService) {}
+  constructor(private movieService: MovieService, private router: Router) {}
 
   ngOnInit(): void {
-    this.movieService.getFilmes().subscribe((data) => {
-      this.filmes = data;
-      console.log('Filmes recebidos:', data);
-    });
+    this.buscarFilmes();
+  }
+
+  buscarFilmes() {
+    if (this.searchTerm.trim()) {
+      this.movieService.buscarFilmes(this.searchTerm).subscribe(filmes => {
+        this.filmes = filmes;
+        this.currentPage = 1;
+      });
+    } else {
+      this.movieService.getFilmes().subscribe(filmes => {
+        this.filmes = filmes;
+        this.currentPage = 1;
+      });
+    }
+  }
+
+  onSearchInput(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.searchTerm = value;
+    this.buscarFilmes();
   }
 
   get paginatedFilmes(): Movie[] {
@@ -41,4 +59,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  navigateToMovie(id: number) {
+    this.router.navigate(['/filmes', id]);
+  }
 }

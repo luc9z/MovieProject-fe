@@ -3,19 +3,18 @@
   <p>Explore filmes, filtre por gênero, marque favoritos e leia avaliações de outros usuários.</p>
 
   <div class="search-filter">
-    <input type="text" placeholder="Buscar por título..." />
-    <select>
-      <option value="">Todos os Gêneros</option>
-      <option value="acao">Ação</option>
-      <option value="comedia">Comédia</option>
-      <option value="drama">Drama</option>
-    </select>
+    <input
+      type="text"
+      placeholder="Buscar por título..."
+      [value]="searchTerm"
+      (input)="onSearchInput($event)"
+    />
   </div>
 
   <div class="movies-grid">
     @for (filme of paginatedFilmes; track filme.id) {
-      <a [routerLink]="['/filmes', filme.id]" class="movie-card">
-      <img [src]="filme.imagemUrl" alt="{{ filme.titulo }}" class="movie-image" />
+      <a (click)="navigateToMovie(filme.id)" class="movie-card" style="cursor: pointer;">
+        <img [src]="filme.imagemUrl" alt="{{ filme.titulo }}" class="movie-image" />
         <div class="movie-info">
           <h2>{{ filme.titulo }}</h2>
           <p><strong>Gênero:</strong> {{ filme.genero }}</p>

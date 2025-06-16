@@ -6,17 +6,14 @@ import { MovieComponent } from './pages/movie/movie';
 export const routes: Routes = [
   {
     path: '',
-    component: HomePage,
+    component: HomePage, // HomePage com Header/Footer
     children: [
-      {
-        path: '',
-        component: HomeComponent
-      },
-      {
-        path: 'filmes/:id',
-        component: MovieComponent
-      }
+      { path: '', component: HomeComponent },
     ]
+  },
+  {
+    path: 'filmes/:id',
+    component: MovieComponent
   },
   {
     path: '**',
