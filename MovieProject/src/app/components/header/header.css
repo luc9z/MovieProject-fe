@@ -1,11 +1,56 @@
 .header-toolbar {
-  position: sticky; top: 0; z-index: 1000;
-  flex-wrap: wrap; gap: .5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 32px;
+  min-height: 56px;
+  background: #161919; /* cor escura, igual à sua */
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
 
-  .brand   { font-weight: 600; cursor: pointer; }
-  .spacer  { flex: 1 1 auto; }
+.brand {
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #fff;
+}
 
-  button.active { font-weight: 600; text-decoration: underline; }
+.spacer {
+  flex: 1 1 auto;
+}
 
-  .search-form { width: 260px; @media (max-width: 599px) { width: 100%; } }
+.header-actions {
+  display: flex;
+  gap: 16px; /* Espaço entre botões */
+}
+
+.mat-button, .btn, button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 18px;
+  font-size: 1rem;
+  border: none;
+  background: #222;
+  color: #fff;
+  border-radius: 6px;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.mat-button:hover, .btn:hover, button:hover {
+  background: #292929;
+}
+
+.mat-icon, .material-icons {
+  font-size: 1.2rem;
+  vertical-align: middle;
+}
+
+/* Remove borda dos botões colados */
+.header-actions button:not(:last-child) {
+  margin-right: 8px;
 }

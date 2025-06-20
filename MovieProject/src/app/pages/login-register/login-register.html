@@ -1,0 +1,39 @@
+<div *ngIf="!modoCadastro; else cadastro" class="login-container">
+  <h2>Login 🎬</h2>
+  <label>
+    <span>Email</span>
+    <input [(ngModel)]="email" placeholder="Email" type="email"/>
+  </label>
+  <label>
+    <span>Senha</span>
+    <input [(ngModel)]="senha" placeholder="Senha" type="password" />
+  </label>
+  <button (click)="fazerLogin()">Entrar</button>
+  <div class="login-switch">
+    <span>Não tem conta?</span>
+    <a href="#" (click)="alternarModo(); $event.preventDefault()">Cadastre-se</a>
+  </div>
+</div>
+
+<ng-template #cadastro>
+  <div class="register-container">
+    <h2>Cadastro 🎥</h2>
+    <label>
+      <span>Nome completo</span>
+      <input [(ngModel)]="nome" placeholder="Nome completo" />
+    </label>
+    <label>
+      <span>Email</span>
+      <input [(ngModel)]="emailCadastro" placeholder="Email" type="email"/>
+    </label>
+    <label>
+      <span>Senha</span>
+      <input [(ngModel)]="senhaCadastro" placeholder="Senha" type="password" />
+    </label>
+    <button (click)="cadastrar()">Registrar</button>
+    <div class="login-switch">
+      <span>Já tem conta?</span>
+      <a href="#" (click)="alternarModo(); $event.preventDefault()">Entrar</a>
+    </div>
+  </div>
+</ng-template>

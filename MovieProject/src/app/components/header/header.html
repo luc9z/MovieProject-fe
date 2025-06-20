@@ -1,9 +1,17 @@
 <mat-toolbar color="primary" class="header-toolbar">
-  <span routerLink="/" class="brand">🎬 Catálogo de Filmes</span>
-
+  <a routerLink="/" class="brand">
+    <mat-icon style="margin-right:8px;">movie</mat-icon>
+    Catálogo de Filmes
+  </a>
   <span class="spacer"></span>
-  <button mat-button routerLink="/favorites" routerLinkActive="active">
-    <mat-icon>favorite</mat-icon>
-    Favoritos
-  </button>
+  <div class="header-actions">
+    <ng-container *ngIf="logado; else loggedOut">
+      <a mat-button routerLink="/favoritos"><mat-icon>favorite</mat-icon>Favoritos</a>
+      <button mat-button (click)="logout()"><mat-icon>logout</mat-icon>Sair</button>
+    </ng-container>
+    <ng-template #loggedOut>
+      <a mat-button routerLink="/auth"><mat-icon>login</mat-icon>Login</a>
+      <a mat-button [routerLink]="['/auth']" [queryParams]="{ cadastro: 'true' }"><mat-icon>person_add</mat-icon>Registrar</a>
+    </ng-template>
+  </div>
 </mat-toolbar>
