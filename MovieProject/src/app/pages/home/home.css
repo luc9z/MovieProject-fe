@@ -1,12 +1,12 @@
 :host {
   display: block;
-  background-color: #121212;
+  background: #16171b;
   min-height: 100vh;
   padding: 0;
 }
 
 .home-container {
-  padding: 2rem;
+  padding: 2.5rem 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,13 +18,19 @@
 }
 
 .home-container h1 {
-  font-weight: 600;
+  font-weight: 800;
+  font-size: 2.5rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.2rem;
+  background: linear-gradient(90deg, #b86aff, #538dff 70%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .home-container p {
-  font-size: 1.1rem;
-  color: #cccccc;
-  max-width: 700px;
+  font-size: 1.13rem;
+  color: #cac7df;
+  max-width: 600px;
 }
 
 .search-filter {
@@ -34,100 +40,165 @@
   justify-content: center;
   width: 100%;
   max-width: 600px;
+  margin-bottom: 1rem;
 }
 
 .search-filter input,
 .search-filter select {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border-radius: 6px;
-  border: 1px solid #444;
-  background-color: #1e1e1e;
+  padding: 0.67rem 1rem;
+  font-size: 1.09rem;
+  border-radius: 9px;
+  border: none;
+  background: #212334;
   color: #fff;
   width: 100%;
-  max-width: 280px;
+  max-width: 275px;
+  box-shadow: 0 2px 12px #191b2141;
+  transition: border 0.15s, box-shadow 0.18s;
+  outline: none;
+}
+.search-filter input:focus,
+.search-filter select:focus {
+  border: 2px solid #725bde;
+  box-shadow: 0 0 0 2px #725bde88;
 }
 
 .movies-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-  padding: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 2rem 2.2rem;
+  padding: 2.5rem 0 0 0;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .movie-card {
-  flex: 0 0 250px;
-  scroll-snap-align: start;
-  background-color: #1e1e1e;
-  border-radius: 12px;
+  background: linear-gradient(110deg, #202235 85%, #181c25 100%);
+  border-radius: 14px;
   overflow: hidden;
-  color: white;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s ease;
+  color: #fff;
+  box-shadow: 0 2px 18px #181c1f3c;
+  transition: transform 0.16s, box-shadow 0.18s;
   display: flex;
   flex-direction: column;
   height: 100%;
   text-decoration: none;
+  border: 1px solid #23243b;
+  cursor: pointer;
+  position: relative;
 }
-
 .movie-card:hover {
-  transform: scale(1.02);
+  transform: scale(1.028) translateY(-4px);
+  box-shadow: 0 6px 32px #6b65ec1c, 0 2px 14px #24222e46;
 }
 
 .movie-image {
   width: 100%;
-  height: 300px;
+  height: 290px;
   object-fit: cover;
   display: block;
+  background: #16171b;
 }
 
 .movie-info {
-  padding: 1rem;
+  padding: 1.07rem 1.1rem 1rem 1.1rem;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 4px;
 }
 
 .movie-info h2 {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.19rem;
+  margin-bottom: 0.34rem;
+  color: #fafafa;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.movie-info p {
+  color: #c4c7d3;
+  font-size: 1.03rem;
+  margin: 0 0 2px 0;
+}
+
+.movie-info strong {
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.sem-filmes {
+  margin: 3rem 0 0 0;
+  color: #e46363;
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
 .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
-  margin: 2rem 0;
+  gap: 1.2rem;
+  margin: 2.5rem 0 1.5rem 0;
 }
 
 .pagination button {
-  padding: 0.6rem 1.2rem;
-  background-color: #333;
+  padding: 0.63rem 1.25rem;
+  background: linear-gradient(90deg, #272942 70%, #2f254d 100%);
   border: none;
-  color: white;
-  border-radius: 8px;
+  color: #fff;
+  border-radius: 10px;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-  min-width: 100px;
-  font-size: 1rem;
+  transition: background 0.16s, transform 0.18s;
+  min-width: 110px;
+  font-size: 1.03rem;
+  box-shadow: 0 1px 8px #3b275e21;
 }
 
 .pagination button:hover:not(:disabled) {
-  background-color: #555;
-  transform: scale(1.03);
+  background: linear-gradient(90deg, #755bde 70%, #4e82e1 100%);
+  transform: scale(1.04);
 }
 
 .pagination button:disabled {
-  background-color: #2a2a2a;
-  opacity: 0.6;
+  background: #2a2a2a;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .pagination span {
-  color: white;
-  font-weight: 600;
-  font-size: 1.1rem;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.14rem;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 900px) {
+  .movies-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.2rem;
+    padding: 1.2rem 0 0 0;
+  }
+  .movie-image {
+    height: 180px;
+  }
+}
+
+@media (max-width: 600px) {
+  .home-container {
+    padding: 1.1rem 0 0 0;
+  }
+  .movies-grid {
+    gap: 0.7rem;
+    padding: 1.1rem 0 0 0;
+  }
+  .movie-image {
+    height: 130px;
+  }
+  .movie-info h2 {
+    font-size: 1rem;
+  }
 }

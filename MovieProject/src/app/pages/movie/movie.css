@@ -1,30 +1,39 @@
+body {
+  background: #16171b !important;
+}
+
 .movie-detail-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 40px 0;
+  min-height: 100vh;
+  background: #16171b;
+  padding: 42px 0 54px 0;
 }
 
 .movie-detail-card {
   display: flex;
   flex-direction: row;
-  background: #202124;
-  border-radius: 18px;
-  box-shadow: 0 4px 24px 0 #0008;
-  padding: 36px;
-  margin-bottom: 32px;
-  min-width: 700px;
-  max-width: 900px;
+  background: linear-gradient(120deg, #202124 80%, #181a1e 100%);
+  border-radius: 22px;
+  box-shadow: 0 8px 36px 0 #000a, 0 2px 12px 0 #151520;
+  padding: 40px 42px 38px 40px;
+  margin-bottom: 40px;
+  min-width: 690px;
+  max-width: 950px;
+  gap: 38px;
+  border: 1.5px solid #24253b;
 }
 
 .movie-detail-image {
   width: 210px;
-  height: 290px;
+  height: 295px;
   object-fit: cover;
-  border-radius: 10px;
-  box-shadow: 0 2px 16px #0005;
-  margin-right: 36px;
-  background: #18191a;
+  border-radius: 14px;
+  box-shadow: 0 2px 24px #1117, 0 0 0 2px #2a2d3a;
+  background: #17171c;
+  margin-right: 0;
+  flex-shrink: 0;
 }
 
 .movie-detail-info {
@@ -35,103 +44,124 @@
 }
 
 .movie-detail-info h1 {
-  font-size: 2.2rem;
-  font-weight: bold;
+  font-size: 2.4rem;
+  font-weight: 800;
   margin: 0 0 18px 0;
   color: #fff;
+  letter-spacing: 0.5px;
+  line-height: 2.9rem;
 }
 
 .movie-detail-meta {
   margin-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 32px;
 }
 
 .movie-detail-meta p {
-  margin: 4px 0;
-  color: #e3e3e3;
-  font-size: 1.1rem;
+  margin: 2px 0;
+  color: #d9dbe7;
+  font-size: 1.09rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
 }
 
 .btn-fav {
-  background: none;
+  background: linear-gradient(90deg, #23243b 60%, #29285a 100%);
   border: none;
-  color: #e05267;
-  font-size: 1.12rem;
+  color: #f36868;
+  font-size: 1.15rem;
+  font-weight: 700;
+  padding: 8px 19px;
   cursor: pointer;
-  margin-top: 10px;
-  font-weight: 600;
-  transition: color 0.2s;
+  margin-left: 12px;
+  margin-top: 0;
+  border-radius: 8px;
+  transition: background 0.13s, color 0.18s, box-shadow 0.13s;
+  box-shadow: 0 1px 4px #222b;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
 }
-
+.btn-fav:hover:not(:disabled) {
+  background: linear-gradient(90deg, #37299e 70%, #3e44e1 100%);
+  color: #fff;
+}
 .btn-fav:disabled {
-  color: #888;
-  opacity: 0.7;
+  color: #7b7b85;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
 .login-msg {
   color: #388bfa;
-  font-size: 1rem;
-  margin-left: 8px;
+  font-size: 0.99rem;
+  margin-left: 14px;
+  font-weight: 500;
 }
 
 .movie-detail-sinopse {
-  margin-top: 28px;
-  color: #e3e3e3;
+  margin-top: 36px;
+  color: #dedeea;
+  font-size: 1.13rem;
+  letter-spacing: 0.02em;
 }
 
 .movie-detail-sinopse h2 {
   margin: 0 0 8px 0;
-  font-size: 1.15rem;
-  font-weight: 600;
+  font-size: 1.23rem;
+  font-weight: 700;
   color: #fff;
-}
-
-.avaliacao-form, .avaliacoes-mural {
-  background: #222328;
-  border-radius: 14px;
-  padding: 22px 30px;
-  margin: 28px 16px 0 0;
-  box-shadow: 0 2px 16px #0005;
-  color: #fff;
+  letter-spacing: 0.03em;
 }
 
 .avaliacao-form {
-  display: inline-block;
-  min-width: 350px;
-  max-width: 400px;
-  vertical-align: top;
-  margin-right: 24px;
-}
-
-.avaliacoes-mural {
-  display: inline-block;
-  min-width: 350px;
-  max-width: 400px;
-  vertical-align: top;
-}
-
-.avaliacoes-flex {
+  background: linear-gradient(110deg, #22242b 70%, #171926 100%);
+  border-radius: 14px;
+  padding: 28px 30px 22px 30px;
+  margin: 0 auto 36px auto;
+  box-shadow: 0 2px 16px #0a0a12;
+  color: #fff;
+  max-width: 420px;
+  min-width: 320px;
+  width: 100%;
   display: flex;
-  flex-direction: row;
-  gap: 32px;
-  justify-content: center;
-  margin-top: 20px;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.avaliacao-form h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 0.7rem;
 }
 
 .star-rating {
-  margin: 10px 0 15px 0;
-  font-size: 1.6rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0 10px 0;
+  font-size: 1.9rem;
+  letter-spacing: 6px;
 }
 
 .star-rating span {
   cursor: pointer;
   color: #aaa;
-  transition: color 0.2s;
-  margin-right: 2px;
+  transition: color 0.22s;
+  font-size: 2rem;
 }
 
 .star-rating .filled {
-  color: #fcd535;
+  color: #ffd932;
+  text-shadow: 0 2px 8px #ffc9323a;
 }
 
 .avaliacao-form input,
@@ -139,56 +169,87 @@
   width: 100%;
   border-radius: 8px;
   border: none;
-  margin-bottom: 10px;
-  padding: 8px 12px;
-  background: #26282e;
+  margin-bottom: 0.5rem;
+  padding: 10px 13px;
+  background: #23242e;
   color: #fff;
   font-size: 1rem;
   box-sizing: border-box;
   resize: none;
+  font-family: inherit;
+  transition: box-shadow 0.16s, background 0.18s;
+}
+.avaliacao-form input:focus,
+.avaliacao-form textarea:focus {
+  background: #1b1c24;
+  box-shadow: 0 0 0 2px #5b65f6cc;
 }
 
 .avaliacao-form textarea {
-  min-height: 64px;
-  max-height: 120px;
+  min-height: 62px;
+  max-height: 122px;
 }
 
 .avaliacao-form button {
-  background: #388bfa;
+  background: linear-gradient(90deg, #4376fa, #5349ff);
   color: #fff;
   border: none;
   border-radius: 8px;
-  padding: 10px 18px;
+  padding: 14px 0;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 1.15rem;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.18s, box-shadow 0.12s;
+  width: 100%;
+  letter-spacing: 0.5px;
+  box-shadow: 0 1px 8px #5349ff14;
 }
-
 .avaliacao-form button:disabled {
-  background: #555b;
+  background: #35385b;
+  color: #cccc;
   cursor: not-allowed;
 }
 
 .avaliacao-login-aviso {
   color: #388bfa;
-  margin: 24px 0 12px 0;
+  margin: 28px 0 12px 0;
   font-weight: 500;
-  font-size: 1.07rem;
+  font-size: 1.10rem;
+  text-align: center;
+}
+
+.avaliacoes-mural {
+  background: linear-gradient(110deg, #22242b 70%, #171926 100%);
+  border-radius: 14px;
+  padding: 26px 30px 22px 30px;
+  margin: 35px auto 0 auto;
+  box-shadow: 0 2px 16px #0a0a12;
+  color: #fff;
+  max-width: 420px;
+  min-width: 320px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .avaliacoes-mural h3 {
-  font-size: 1.3rem;
-  margin-bottom: 18px;
+  font-size: 1.33rem;
+  margin-bottom: 19px;
   color: #fff;
+  letter-spacing: 0.02em;
+  font-weight: 700;
+  width: 100%;
+  text-align: center;
 }
 
 .avaliacao-card {
-  background: #191a1e;
+  background: linear-gradient(90deg, #1a1b1f 70%, #202132 100%);
   border-radius: 10px;
   padding: 14px 14px 12px 14px;
   margin-bottom: 13px;
-  box-shadow: 0 2px 8px #0005;
+  box-shadow: 0 2px 12px #1617221f;
+  width: 100%;
 }
 
 .avaliacao-header {
@@ -198,45 +259,62 @@
 }
 
 .avaliacao-header strong {
-  font-size: 1.06rem;
+  font-size: 1.09rem;
   color: #fff;
+  font-weight: 600;
 }
 
 .avaliacao-stars {
-  color: #bbb;
-  font-size: 1.13rem;
+  color: #bfbec2;
+  font-size: 1.16rem;
 }
-
 .avaliacao-stars .filled {
-  color: #fcd535;
+  color: #ffe55d;
 }
 
 .avaliacao-comentario {
-  color: #e3e3e3;
-  font-size: 1rem;
-  margin: 6px 0 0 0;
+  color: #e6e6ed;
+  font-size: 1.04rem;
+  margin: 8px 0 0 0;
+  letter-spacing: 0.01em;
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1200px) {
   .movie-detail-card {
     flex-direction: column;
     align-items: center;
     min-width: 0;
-    max-width: 98vw;
-    padding: 22px;
+    max-width: 99vw;
+    padding: 20px 10vw;
+    gap: 24px;
   }
   .movie-detail-image {
-    margin-right: 0;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
   }
-  .avaliacoes-flex {
-    flex-direction: column;
-    gap: 10px;
+}
+@media (max-width: 700px) {
+  .movie-detail-container {
+    padding: 20px 0 32px 0;
   }
-  .avaliacao-form,
-  .avaliacoes-mural {
-    min-width: 250px;
+  .movie-detail-card {
+    min-width: 0;
+    max-width: 98vw;
+    padding: 10px 0vw 18px 0vw;
+    gap: 18px;
+  }
+  .movie-detail-image {
+    width: 90vw;
+    height: 180px;
+    max-width: 94vw;
+  }
+  .movie-detail-info h1 {
+    font-size: 1.3rem;
+    line-height: 2.1rem;
+  }
+  .avaliacao-form, .avaliacoes-mural {
+    min-width: 1px;
     max-width: 99vw;
-    margin: 18px 0 0 0;
+    padding: 14px 5vw;
+    margin: 16px 0 0 0;
   }
 }

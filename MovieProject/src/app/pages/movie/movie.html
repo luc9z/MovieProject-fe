@@ -37,7 +37,7 @@
         </span>
       </ng-container>
     </div>
-    <input [value]="usuarioNome" disabled style="background:#2a2b30; color:#fff;" />
+    <input [value]="usuarioNome" disabled />
     <textarea [(ngModel)]="avaliacaoComentario" placeholder="Comentário" maxlength="300"></textarea>
     <button (click)="enviarAvaliacao(filme.id)"
             [disabled]="avaliacaoEnviando || !avaliacaoNota || !avaliacaoComentario">

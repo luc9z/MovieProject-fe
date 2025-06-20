@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Usuario } from './user';
 
 function isBrowser(): boolean {
   return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class AuthService {
   private _loggedIn$ = new BehaviorSubject<boolean>(false);
 
@@ -26,7 +27,7 @@ export class AuthService {
     }
   }
 
-  login(token: string) {
+  login(token: string, usuario: Usuario) {
     if (isBrowser()) {
       localStorage.setItem('token', token);
       this._loggedIn$.next(true);
