@@ -7,6 +7,14 @@
         <p><strong>Gênero:</strong> {{ filme.genero }}</p>
         <p><strong>Ano:</strong> {{ filme.anoLancamento }}</p>
         <p><strong>Nota:</strong> {{ filme.notaMedia }} ⭐</p>
+        <button
+          type="button"
+          class="btn-fav"
+          [disabled]="carregandoFavorito"
+          (click)="toggleFavorito(); $event.stopPropagation()">
+          <span *ngIf="!favoritado">🤍 Favoritar</span>
+          <span *ngIf="favoritado">❤️ Desfavoritar</span>
+        </button>
       </div>
       <div class="movie-detail-sinopse">
         <h2>Sinopse</h2>

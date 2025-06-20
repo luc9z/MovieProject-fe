@@ -1,1 +1,22 @@
-<p>favoritos works!</p>
+<section class="favoritos-container">
+  <h1>Meus Favoritos ❤️</h1>
+  <div *ngIf="filmes.length > 0; else nenhum">
+    <div class="movies-grid">
+      <div *ngFor="let filme of filmes; let i = index" class="movie-card">
+        <img [src]="filme.imagemUrl" [alt]="filme.titulo" class="movie-image"/>
+        <div class="movie-info">
+          <h2>{{ filme.titulo }}</h2>
+          <p><strong>Gênero:</strong> {{ filme.genero }}</p>
+          <p><strong>Ano:</strong> {{ filme.anoLancamento }}</p>
+          <p><strong>Nota:</strong> {{ filme.notaMedia }} <span style="color:gold">⭐</span></p>
+        </div>
+        <button class="btn-fav" (click)="desfavoritar(filme, i)">
+          <span>🗑️ Remover dos Favoritos</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <ng-template #nenhum>
+    <p>Você ainda não favoritou nenhum filme.</p>
+  </ng-template>
+</section>

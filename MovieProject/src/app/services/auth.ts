@@ -39,4 +39,19 @@ export class AuthService {
       this._loggedIn$.next(false);
     }
   }
+
+  getUsuarioLogado(): string | null {
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      const userString = localStorage.getItem('usuario');
+      if (userString) {
+        try {
+          const usuario = JSON.parse(userString);
+          return usuario.email;
+        } catch {
+          return null;
+        }
+      }
+    }
+    return null;
+  }
 }

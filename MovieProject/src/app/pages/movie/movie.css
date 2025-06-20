@@ -36,6 +36,25 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
+.btn-fav {
+  margin-top: 8px;
+  background: none;
+  border: none;
+  color: #ff3366;
+  font-size: 1rem;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.2s;
+}
+
+.btn-fav:hover {
+  color: #ff0033;
+  text-decoration: underline;
+}
+
 .movie-detail-info {
   flex: 1;
   display: flex;
