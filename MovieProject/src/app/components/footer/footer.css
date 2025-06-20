@@ -1,4 +1,35 @@
 .footer-toolbar {
+  background: linear-gradient(90deg, #1b1b1e 80%, #181a1e 100%) !important;
+  color: #d6d7ea !important;
+  flex-direction: column;
   justify-content: center;
-  font-size: .85rem;
+  align-items: center;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  box-shadow: 0 -2px 18px #0009;
+  border-top: 1px solid #23253b;
+  min-height: 70px;
+  padding: 10px 0 12px 0;
+  gap: 2px;
+}
+
+.footer-toolbar span {
+  width: 100%;
+  text-align: center;
+  opacity: 0.92;
+  text-shadow: 0 1px 6px #0b0b1540;
+  font-size: 0.97rem;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .footer-toolbar {
+    font-size: 0.90rem;
+    min-height: 80px;
+    padding: 8px 0 14px 0;
+  }
+  .footer-toolbar span {
+    font-size: 0.87rem;
+  }
 }

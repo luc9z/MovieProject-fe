@@ -12,8 +12,11 @@ import { Observable, of } from 'rxjs';
   selector: 'app-movie',
   standalone: true,
   templateUrl: './movie.html',
-  imports: [CommonModule, FormsModule],
-  styleUrls: ['./movie.css']
+  styleUrls: ['./movie.css'],
+  imports: [
+    CommonModule,
+    FormsModule,
+  ]
 })
 export class MovieComponent implements OnInit {
   filme$: Observable<Movie> = of();
@@ -109,18 +112,13 @@ export class MovieComponent implements OnInit {
       comentario: this.avaliacaoComentario,
       nota: this.avaliacaoNota
     };
-    const novaAvaliacao = { ...avaliacao };
-    this.avaliacoes = [
-      { ...novaAvaliacao, id: Math.random() * 100000 },
-      ...this.avaliacoes
-    ];
     this.avaliacaoService.cadastrarAvaliacao(filmeId, avaliacao).subscribe({
       next: () => {
         this.avaliacaoComentario = '';
         this.avaliacaoNota = 0;
         this.avaliacaoEnviando = false;
         this.carregarAvaliacoes();
-        this.filme$ = this.movieService.getFilmeById(filmeId);
+        this.filme$ = this.movieService.getFilmeById(filmeId); // Atualiza nota média
       },
       error: () => {
         this.avaliacaoEnviando = false;
