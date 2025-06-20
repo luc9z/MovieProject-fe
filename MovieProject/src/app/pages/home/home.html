@@ -9,6 +9,14 @@
       [value]="searchTerm"
       (input)="onSearchInput($event)"
     />
+
+    <select
+      [(ngModel)]="selectedGenero"
+      (change)="onGeneroChange($event)"
+    >
+      <option value="">Todos os Gêneros</option>
+      <option *ngFor="let genero of generos" [value]="genero">{{ genero }}</option>
+    </select>
   </div>
 
   <div *ngIf="filmes$ | async as filmes">

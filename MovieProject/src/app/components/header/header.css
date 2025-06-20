@@ -1,21 +1,28 @@
 .header-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 32px;
-  min-height: 56px;
-  background: #161919; /* cor escura, igual à sua */
+  background: #111314 !important;
   color: #fff;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  height: 60px;
+  padding: 0 36px !important;
+  box-shadow: 0 1px 12px 0 #0002;
+  display: flex;
+  align-items: center;
+  z-index: 20;
+  border-bottom: 1.5px solid #202124;
 }
 
 .brand {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #fff !important;
   display: flex;
   align-items: center;
-  font-size: 1.4rem;
-  font-weight: bold;
   text-decoration: none;
-  color: #fff;
+  transition: color 0.18s;
+  margin-right: 18px;
+}
+
+.brand:hover {
+  color: #7ccfff !important;
 }
 
 .spacer {
@@ -24,33 +31,47 @@
 
 .header-actions {
   display: flex;
-  gap: 16px; /* Espaço entre botões */
+  align-items: center;
+  gap: 10px;
 }
 
-.mat-button, .btn, button {
+.header-actions a[mat-button], .header-actions button[mat-button] {
+  background: none;
+  border: none;
+  color: #90caf9;
+  font-size: 1rem;
+  font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 18px;
-  font-size: 1rem;
-  border: none;
-  background: #222;
+  gap: 4px;
+  padding: 8px 15px;
+  border-radius: 7px;
+  transition: background 0.16s, color 0.17s;
+  text-decoration: none;
+}
+
+.header-actions a[mat-button]:hover,
+.header-actions button[mat-button]:hover {
+  background: #232427;
   color: #fff;
-  border-radius: 6px;
-  transition: background 0.2s;
-  cursor: pointer;
+  text-decoration: none;
 }
 
-.mat-button:hover, .btn:hover, button:hover {
-  background: #292929;
-}
-
-.mat-icon, .material-icons {
-  font-size: 1.2rem;
+.header-actions mat-icon {
   vertical-align: middle;
 }
 
-/* Remove borda dos botões colados */
-.header-actions button:not(:last-child) {
-  margin-right: 8px;
+@media (max-width: 800px) {
+  .header-toolbar {
+    padding: 0 10px !important;
+    height: 50px;
+  }
+  .brand {
+    font-size: 1.05rem;
+    margin-right: 8px;
+  }
+  .header-actions a[mat-button], .header-actions button[mat-button] {
+    font-size: 0.92rem;
+    padding: 7px 7px;
+  }
 }

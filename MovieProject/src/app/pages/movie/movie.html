@@ -6,20 +6,62 @@
       <div class="movie-detail-meta">
         <p><strong>Gênero:</strong> {{ filme.genero }}</p>
         <p><strong>Ano:</strong> {{ filme.anoLancamento }}</p>
-        <p><strong>Nota:</strong> {{ filme.notaMedia }} ⭐</p>
+        <p><strong>Nota:</strong> {{ filme.notaMedia.toFixed(1) }} <span style="color:gold">⭐</span></p>
         <button
           type="button"
           class="btn-fav"
-          [disabled]="carregandoFavorito"
+          [disabled]="carregandoFavorito || !estaLogado"
           (click)="toggleFavorito(); $event.stopPropagation()">
           <span *ngIf="!favoritado">🤍 Favoritar</span>
           <span *ngIf="favoritado">❤️ Desfavoritar</span>
         </button>
+        <span *ngIf="!estaLogado" class="login-msg">Entre ou registre-se para favoritar</span>
       </div>
       <div class="movie-detail-sinopse">
         <h2>Sinopse</h2>
         <p>{{ filme.sinopse }}</p>
       </div>
+    </div>
+  </div>
+
+  <div *ngIf="estaLogado; else precisaLogin" class="avaliacao-form">
+    <h2>Avalie este filme</h2>
+    <div class="star-rating">
+      <ng-container *ngFor="let star of [1,2,3,4,5]">
+        <span
+          (click)="setNota(star)"
+          (mouseover)="hoverNota = star"
+          (mouseleave)="hoverNota = 0"
+          [class.filled]="star <= (hoverNota || avaliacaoNota)">
+          ★
+        </span>
+      </ng-container>
+    </div>
+    <input [value]="usuarioNome" disabled style="background:#2a2b30; color:#fff;" />
+    <textarea [(ngModel)]="avaliacaoComentario" placeholder="Comentário" maxlength="300"></textarea>
+    <button (click)="enviarAvaliacao(filme.id)"
+            [disabled]="avaliacaoEnviando || !avaliacaoNota || !avaliacaoComentario">
+      Enviar Avaliação
+    </button>
+  </div>
+  <ng-template #precisaLogin>
+    <div class="avaliacao-login-aviso">
+      <strong>Entre ou registre-se para avaliar o filme.</strong>
+    </div>
+  </ng-template>
+
+  <div class="avaliacoes-mural" *ngIf="avaliacoes.length > 0">
+    <h3>Avaliações dos usuários</h3>
+    <div class="avaliacao-card" *ngFor="let avaliacao of avaliacoes">
+      <div class="avaliacao-header">
+        <strong>{{ avaliacao.autor }}</strong>
+        <span class="avaliacao-stars">
+          <ng-container *ngFor="let star of [1,2,3,4,5]">
+            <span [class.filled]="star <= avaliacao.nota">★</span>
+          </ng-container>
+        </span>
+      </div>
+      <p class="avaliacao-comentario">{{ avaliacao.comentario }}</p>
     </div>
   </div>
 </section>

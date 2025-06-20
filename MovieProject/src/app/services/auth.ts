@@ -41,12 +41,26 @@ export class AuthService {
   }
 
   getUsuarioLogado(): string | null {
-    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-      const userString = localStorage.getItem('usuario');
-      if (userString) {
+    if (isBrowser()) {
+      const usuario = localStorage.getItem('usuario');
+      if (!usuario) return null;
+      try {
+        return JSON.parse(usuario).email || null;
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  }
+
+  getNomeUsuarioLogado(): string | null {
+    if (isBrowser()) {
+      console.log('Tentando acessar localStorage');
+      const usuario = localStorage.getItem('usuario');
+      if (usuario) {
         try {
-          const usuario = JSON.parse(userString);
-          return usuario.email;
+          const user = JSON.parse(usuario);
+          return user.nome || user.email || null;
         } catch {
           return null;
         }
@@ -54,4 +68,5 @@ export class AuthService {
     }
     return null;
   }
+
 }

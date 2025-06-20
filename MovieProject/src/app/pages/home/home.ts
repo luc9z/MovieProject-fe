@@ -1,84 +1,89 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { MovieService, Movie } from '../../services/movie';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
-import { Subject, Observable, Subscription, debounceTime, switchMap, startWith, map } from 'rxjs';
+import { Subject, combineLatest, Observable, startWith, debounceTime, switchMap, map } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
-export class HomeComponent implements OnInit, OnDestroy {
-  filmes$: Observable<Movie[]>;
-  private searchTerm$ = new Subject<string>();
-  searchTerm: string = '';
+export class HomeComponent {
+  searchTerm$ = new Subject<string>();
+  generoTerm$ = new Subject<string>();
+
+  searchTerm = '';
+  selectedGenero = '';
   currentPage = 1;
   itemsPerPage = 16;
 
-  private filmesData: Movie[] = [];
-  private sub?: Subscription;
+  generos: string[] = [
+    'Ação', 'Comédia', 'Drama', 'Fantasia', 'Terror', 'Ficção',
+    'Romance', 'Aventura', 'Animação'
+  ];
+
+  filmesData: Movie[] = [];
+  filmes$: Observable<Movie[]>;
 
   constructor(private movieService: MovieService, private router: Router) {
-    this.filmes$ = this.searchTerm$.pipe(
-      startWith(''),
+    this.filmes$ = combineLatest([
+      this.searchTerm$.pipe(startWith('')),
+      this.generoTerm$.pipe(startWith(''))
+    ]).pipe(
       debounceTime(250),
-      switchMap((term) =>
-        term.trim()
-          ? this.movieService.buscarFilmes(term.trim())
-          : this.movieService.getFilmes()
-      ),
+      switchMap(([search, genero]) => {
+        if (search && search.trim()) {
+          return this.movieService.buscarFilmes(search.trim());
+        } else if (genero && genero.trim()) {
+          return this.movieService.filtrarPorGenero(genero.trim());
+        } else {
+          return this.movieService.getFilmes();
+        }
+      }),
       map(filmes => {
         this.filmesData = filmes;
         return this.paginate(filmes, this.currentPage, this.itemsPerPage);
       })
     );
-  }
-
-  ngOnInit(): void {
-    this.searchTerm$.next('');
-  }
-
-  ngOnDestroy(): void {
-    this.sub?.unsubscribe();
   }
 
   onSearchInput(event: Event) {
     const value = (event.target as HTMLInputElement).value;
     this.searchTerm = value;
     this.currentPage = 1;
+    this.selectedGenero = '';
     this.searchTerm$.next(value);
+  }
+
+  onGeneroChange(event: Event) {
+    const value = (event.target as HTMLSelectElement).value;
+    this.selectedGenero = value;
+    this.currentPage = 1;
+    this.searchTerm = '';
+    this.generoTerm$.next(value);
   }
 
   nextPage() {
     if (this.filmesData.length > this.currentPage * this.itemsPerPage) {
       this.currentPage++;
-      this.refreshPage();
+      this.emitCurrentTerms();
     }
   }
 
   prevPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.refreshPage();
+      this.emitCurrentTerms();
     }
   }
 
-  refreshPage() {
-    this.filmes$ = this.searchTerm$.pipe(
-      startWith(this.searchTerm),
-      switchMap((term) =>
-        term.trim()
-          ? this.movieService.buscarFilmes(term.trim())
-          : this.movieService.getFilmes()
-      ),
-      map(filmes => {
-        this.filmesData = filmes;
-        return this.paginate(filmes, this.currentPage, this.itemsPerPage);
-      })
-    );
+  emitCurrentTerms() {
+    this.searchTerm$.next(this.searchTerm);
+    this.generoTerm$.next(this.selectedGenero);
   }
 
   paginate(array: Movie[], page: number, itemsPerPage: number): Movie[] {
@@ -93,5 +98,4 @@ export class HomeComponent implements OnInit, OnDestroy {
   trackById(index: number, filme: Movie) {
     return filme.id;
   }
-
 }
