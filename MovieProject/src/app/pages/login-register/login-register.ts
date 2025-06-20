@@ -41,7 +41,7 @@ export class LoginRegisterComponent {
     }
     this.userService.login(this.email, this.senha).subscribe({
       next: usuario => {
-        this.authService.login(usuario.email, usuario);
+        this.authService.login(usuario.email, usuario); // usando email como "token"
         Swal.fire('Sucesso', 'Login realizado!', 'success').then(() => {
           this.router.navigate(['/']);
         });
@@ -65,16 +65,18 @@ export class LoginRegisterComponent {
       Swal.fire('Erro', 'A senha deve ter pelo menos 4 caracteres.', 'error');
       return;
     }
+
     const novoUsuario: Usuario = {
       nome: this.nome,
       email: this.emailCadastro,
       senha: this.senhaCadastro
     };
+
     this.userService.register(novoUsuario).subscribe({
       next: usuario => {
         this.userService.login(this.emailCadastro, this.senhaCadastro).subscribe({
           next: user => {
-            this.authService.login(user.email, user);
+            this.authService.login(user.email, user); // usando email como "token"
             Swal.fire('Sucesso', 'Cadastro realizado com sucesso!', 'success').then(() => {
               this.router.navigate(['/']);
             });

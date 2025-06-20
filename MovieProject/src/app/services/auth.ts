@@ -6,7 +6,7 @@ function isBrowser(): boolean {
   return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
 }
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
   private _loggedIn$ = new BehaviorSubject<boolean>(false);
 
@@ -30,6 +30,7 @@ export class AuthService {
   login(token: string, usuario: Usuario) {
     if (isBrowser()) {
       localStorage.setItem('token', token);
+      localStorage.setItem('usuario', JSON.stringify(usuario));
       this._loggedIn$.next(true);
     }
   }
@@ -37,6 +38,7 @@ export class AuthService {
   logout() {
     if (isBrowser()) {
       localStorage.removeItem('token');
+      localStorage.removeItem('usuario');
       this._loggedIn$.next(false);
     }
   }
@@ -56,7 +58,6 @@ export class AuthService {
 
   getNomeUsuarioLogado(): string | null {
     if (isBrowser()) {
-      console.log('Tentando acessar localStorage');
       const usuario = localStorage.getItem('usuario');
       if (usuario) {
         try {
@@ -69,5 +70,4 @@ export class AuthService {
     }
     return null;
   }
-
 }
