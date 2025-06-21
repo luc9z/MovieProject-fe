@@ -6,8 +6,16 @@
   box-shadow: 0 2px 16px 0 #0004, 0 1.5px 0 #23253b;
   display: flex;
   align-items: center;
+  justify-content: center;
   z-index: 20;
   border-bottom: 1.5px solid #24253b;
+}
+
+.brand {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-right: 0;
 }
 
 .brand {
@@ -18,7 +26,6 @@
   align-items: center;
   text-decoration: none;
   transition: color 0.18s, text-shadow 0.22s;
-  margin-right: 22px;
   letter-spacing: 0.02em;
   text-shadow: 0 1px 8px #0005;
 }
@@ -86,4 +93,10 @@
     gap: 3px;
     border-radius: 7px;
   }
+}
+
+
+#logo {
+  width: 154px;
+  display: block;
 }
