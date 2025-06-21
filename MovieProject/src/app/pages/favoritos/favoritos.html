@@ -8,7 +8,7 @@
           <h2>{{ filme.titulo }}</h2>
           <p><strong>Gênero:</strong> {{ filme.genero }}</p>
           <p><strong>Ano:</strong> {{ filme.anoLancamento }}</p>
-          <p><strong>Nota:</strong> {{ filme.notaMedia }} <span style="color:gold">⭐</span></p>
+          <p><strong>Nota:</strong> {{ filme.notaMedia.toFixed(1) }} <span style="color:gold">⭐</span></p>
         </div>
         <button class="btn-fav" (click)="desfavoritar(filme, i)">
           <span>🗑️ Remover dos Favoritos</span>

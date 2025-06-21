@@ -7,6 +7,7 @@ import { AuthService } from '../../services/auth';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-movie',
@@ -118,11 +119,25 @@ export class MovieComponent implements OnInit {
         this.avaliacaoNota = 0;
         this.avaliacaoEnviando = false;
         this.carregarAvaliacoes();
-        this.filme$ = this.movieService.getFilmeById(filmeId); // Atualiza nota média
+        this.filme$ = this.movieService.getFilmeById(filmeId);
+
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Avaliação Enviada',
+          text: 'Sua avaliação foi enviada com sucesso!',
+        });
       },
       error: () => {
         this.avaliacaoEnviando = false;
         this.carregarAvaliacoes();
+
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro',
+          text: 'Houve um erro ao enviar sua avaliação. Tente novamente!',
+        });
       }
     });
   }
