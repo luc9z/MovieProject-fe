@@ -1,17 +1,24 @@
 <mat-toolbar color="primary" class="header-toolbar">
   <a routerLink="/" class="brand">
+    <img id="logo" src="assets/logo.png" alt="beckflix logo">
   </a>
 
-  <img id="logo" src="assets/logo.png">
-  <span class="spacer"></span>
   <div class="header-actions">
     <ng-container *ngIf="logado; else loggedOut">
-      <a mat-button routerLink="/favoritos"><mat-icon>favorite</mat-icon>Favoritos</a>
-      <button mat-button (click)="logout()"><mat-icon>logout</mat-icon>Sair</button>
+      <a mat-button routerLink="/favoritos">
+        <mat-icon>favorite</mat-icon>Favoritos
+      </a>
+      <button mat-button (click)="logout()">
+        <mat-icon>logout</mat-icon>Sair
+      </button>
     </ng-container>
     <ng-template #loggedOut>
-      <a mat-button routerLink="/auth"><mat-icon>login</mat-icon>Login</a>
-      <a mat-button [routerLink]="['/auth']" [queryParams]="{ cadastro: 'true' }"><mat-icon>person_add</mat-icon>Registrar</a>
+      <a mat-button routerLink="/auth">
+        <mat-icon>login</mat-icon>Login
+      </a>
+      <a mat-button [routerLink]="['/auth']" [queryParams]="{ cadastro: 'true' }">
+        <mat-icon>person_add</mat-icon>Registrar
+      </a>
     </ng-template>
   </div>
 </mat-toolbar>

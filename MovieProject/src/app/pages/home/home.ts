@@ -1,44 +1,69 @@
-import { Component } from '@angular/core';
-import { MovieService, Movie } from '../../services/movie';
-import { CommonModule, NgForOf, NgIf } from '@angular/common';
+// src/app/pages/home/home.component.ts
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  Inject,
+  PLATFORM_ID
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
-import { Subject, combineLatest, Observable, startWith, debounceTime, switchMap, map } from 'rxjs';
+import { MovieService, Movie } from '../../services/movie';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import {
+  Subject,
+  combineLatest,
+  Observable,
+  startWith,
+  debounceTime,
+  switchMap,
+  map
+} from 'rxjs';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule
+  ],
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
-export class HomeComponent {
-  searchTerm$ = new Subject<string>();
-  generoTerm$ = new Subject<string>();
+export class HomeComponent implements OnInit, AfterViewInit {
+  @ViewChild('movieCarousel', { static: true }) carouselEl!: ElementRef;
 
-  searchTerm = '';
+  searchTerm$    = new Subject<string>();
+  generoTerm$    = new Subject<string>();
+  searchTerm     = '';
   selectedGenero = '';
-  currentPage = 1;
-  itemsPerPage = 16;
+  currentPage    = 1;
+  itemsPerPage   = 16;
 
   generos: string[] = [
-    'Ação', 'Comédia', 'Drama', 'Fantasia', 'Terror', 'Ficção',
-    'Romance', 'Aventura', 'Animação'
+    'Ação', 'Comédia', 'Drama', 'Fantasia', 'Terror',
+    'Ficção', 'Romance', 'Aventura', 'Animação'
   ];
-
   filmesData: Movie[] = [];
   filmes$: Observable<Movie[]>;
 
-  constructor(private movieService: MovieService, private router: Router) {
+  constructor(
+    private movieService: MovieService,
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
     this.filmes$ = combineLatest([
       this.searchTerm$.pipe(startWith('')),
       this.generoTerm$.pipe(startWith(''))
     ]).pipe(
       debounceTime(250),
       switchMap(([search, genero]) => {
-        if (search && search.trim()) {
+        if (search.trim()) {
           return this.movieService.buscarFilmes(search.trim());
-        } else if (genero && genero.trim()) {
+        } else if (genero.trim()) {
           return this.movieService.filtrarPorGenero(genero.trim());
         } else {
           return this.movieService.getFilmes();
@@ -51,20 +76,37 @@ export class HomeComponent {
     );
   }
 
+  ngOnInit(): void {
+    this.searchTerm$.next('');
+    this.generoTerm$.next('');
+  }
+
+  async ngAfterViewInit(): Promise<void> {
+    // só roda no browser
+    if (isPlatformBrowser(this.platformId)) {
+      const { default: Carousel } = await import('bootstrap/js/dist/carousel');
+      new Carousel(this.carouselEl.nativeElement, {
+        interval: 3000,
+        ride: 'carousel',
+        wrap: true
+      });
+    }
+  }
+
   onSearchInput(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.searchTerm = value;
+    const v = (event.target as HTMLInputElement).value;
+    this.searchTerm = v;
     this.currentPage = 1;
     this.selectedGenero = '';
-    this.searchTerm$.next(value);
+    this.searchTerm$.next(v);
   }
 
   onGeneroChange(event: Event) {
-    const value = (event.target as HTMLSelectElement).value;
-    this.selectedGenero = value;
+    const v = (event.target as HTMLSelectElement).value;
+    this.selectedGenero = v;
     this.currentPage = 1;
     this.searchTerm = '';
-    this.generoTerm$.next(value);
+    this.generoTerm$.next(v);
   }
 
   nextPage() {
@@ -95,7 +137,7 @@ export class HomeComponent {
     this.router.navigate(['/filmes', id]);
   }
 
-  trackById(index: number, filme: Movie) {
+  trackById(_: number, filme: Movie) {
     return filme.id;
   }
 }

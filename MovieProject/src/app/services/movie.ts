@@ -23,9 +23,9 @@ export interface Avaliacao {
   providedIn: 'root'
 })
 export class MovieService {
-  private apiFilmes = 'http://localhost:8080/filmes';
+  private apiFilmes     = 'http://localhost:8080/filmes';
   private apiAvaliacoes = 'http://localhost:8080/avaliacoes';
-  private apiFavoritos = 'http://localhost:8080/favoritos';
+  private apiFavoritos  = 'http://localhost:8080/favoritos';
 
   constructor(private http: HttpClient) {}
 
