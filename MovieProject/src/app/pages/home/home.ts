@@ -1,54 +1,41 @@
-// src/app/pages/home/home.component.ts
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-  Inject,
-  PLATFORM_ID
-} from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { MovieService, Movie } from '../../services/movie';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  Subject,
-  combineLatest,
-  Observable,
-  startWith,
-  debounceTime,
-  switchMap,
-  map
-} from 'rxjs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { Subject, combineLatest, Observable, startWith, debounceTime, map } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatIconModule
   ],
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('movieCarousel', { static: true }) carouselEl!: ElementRef;
-
-  searchTerm$    = new Subject<string>();
-  generoTerm$    = new Subject<string>();
-  searchTerm     = '';
-  selectedGenero = '';
-  currentPage    = 1;
-  itemsPerPage   = 16;
-
-  generos: string[] = [
-    'Ação', 'Comédia', 'Drama', 'Fantasia', 'Terror',
-    'Ficção', 'Romance', 'Aventura', 'Animação'
-  ];
+  fullFilmes: Movie[] = [];
   filmesData: Movie[] = [];
   filmes$: Observable<Movie[]>;
+  searchTerm$ = new Subject<string>();
+  generoTerm$ = new Subject<string>();
+  searchTerm = '';
+  selectedGenero = '';
+  currentPage = 1;
+  itemsPerPage = 16;
+  generos = ['Ação','Comédia','Drama','Fantasia','Terror','Ficção','Romance','Aventura','Animação'];
 
   constructor(
     private movieService: MovieService,
@@ -60,77 +47,68 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.generoTerm$.pipe(startWith(''))
     ]).pipe(
       debounceTime(250),
-      switchMap(([search, genero]) => {
-        if (search.trim()) {
-          return this.movieService.buscarFilmes(search.trim());
-        } else if (genero.trim()) {
-          return this.movieService.filtrarPorGenero(genero.trim());
-        } else {
-          return this.movieService.getFilmes();
+      map(([search, genero]) => {
+        let lista = this.fullFilmes;
+        if (search) {
+          lista = lista.filter(f => f.titulo.toLowerCase().includes(search.toLowerCase()));
         }
-      }),
-      map(filmes => {
-        this.filmesData = filmes;
-        return this.paginate(filmes, this.currentPage, this.itemsPerPage);
+        if (genero) {
+          lista = lista.filter(f =>
+            f.genero.split(',').map(x => x.trim()).includes(genero)
+          );
+        }
+        this.filmesData = lista;
+        const start = (this.currentPage - 1) * this.itemsPerPage;
+        return lista.slice(start, start + this.itemsPerPage);
       })
     );
   }
 
   ngOnInit(): void {
-    this.searchTerm$.next('');
-    this.generoTerm$.next('');
+    this.movieService.getFilmes().subscribe(f => {
+      this.fullFilmes = f;
+      this.searchTerm$.next('');
+      this.generoTerm$.next('');
+    });
   }
 
   async ngAfterViewInit(): Promise<void> {
-    // só roda no browser
     if (isPlatformBrowser(this.platformId)) {
       const { default: Carousel } = await import('bootstrap/js/dist/carousel');
-      new Carousel(this.carouselEl.nativeElement, {
-        interval: 3000,
-        ride: 'carousel',
-        wrap: true
-      });
+      new Carousel(this.carouselEl.nativeElement, { interval:3000, ride:'carousel', wrap:true });
     }
   }
 
-  onSearchInput(event: Event) {
-    const v = (event.target as HTMLInputElement).value;
-    this.searchTerm = v;
+  onSearchInput(value: string) {
+    this.searchTerm = value;
     this.currentPage = 1;
     this.selectedGenero = '';
-    this.searchTerm$.next(v);
+    this.searchTerm$.next(value);
+    this.generoTerm$.next('');
   }
 
-  onGeneroChange(event: Event) {
-    const v = (event.target as HTMLSelectElement).value;
-    this.selectedGenero = v;
+  onGeneroChange(value: string) {
+    this.selectedGenero = value;
     this.currentPage = 1;
     this.searchTerm = '';
-    this.generoTerm$.next(v);
+    this.generoTerm$.next(value);
+    this.searchTerm$.next('');
   }
 
   nextPage() {
     if (this.filmesData.length > this.currentPage * this.itemsPerPage) {
       this.currentPage++;
-      this.emitCurrentTerms();
+      this.searchTerm$.next(this.searchTerm);
+      this.generoTerm$.next(this.selectedGenero);
     }
   }
 
   prevPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.emitCurrentTerms();
+      this.searchTerm$.next(this.searchTerm);
+      this.generoTerm$.next(this.selectedGenero);
     }
-  }
-
-  emitCurrentTerms() {
-    this.searchTerm$.next(this.searchTerm);
-    this.generoTerm$.next(this.selectedGenero);
-  }
-
-  paginate(array: Movie[], page: number, itemsPerPage: number): Movie[] {
-    const start = (page - 1) * itemsPerPage;
-    return array.slice(start, start + itemsPerPage);
   }
 
   navigateToMovie(id: number) {
