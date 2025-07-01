@@ -4,18 +4,30 @@
 
   <div #movieCarousel id="movieCarousel" class="carousel slide">
     <div class="carousel-inner">
-      <div *ngFor="let filme of fullFilmes; let i = index"
-           class="carousel-item"
-           [class.active]="i === 0">
+      <div
+        *ngFor="let filme of fullFilmes; let i = index"
+        class="carousel-item"
+        [class.active]="i === 0"
+      >
         <a (click)="navigateToMovie(filme.id)">
-          <img [src]="filme.imagemUrl" [alt]="filme.titulo" class="d-block" />
+          <img [src]="filme.imagemUrl" [alt]="filme.titulo" />
         </a>
       </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#movieCarousel" data-bs-slide="prev">
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#movieCarousel"
+      data-bs-slide="prev"
+    >
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#movieCarousel" data-bs-slide="next">
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#movieCarousel"
+      data-bs-slide="next"
+    >
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
     </button>
   </div>
@@ -40,21 +52,25 @@
 
   <div *ngIf="filmes$ | async as filmes">
     <div class="movies-grid">
-      <a *ngFor="let f of filmes; trackBy: trackById" (click)="navigateToMovie(f.id)" class="movie-card">
+      <a
+        *ngFor="let f of filmes; trackBy: trackById"
+        (click)="navigateToMovie(f.id)"
+        class="movie-card"
+      >
         <img [src]="f.imagemUrl" [alt]="f.titulo" class="movie-image" />
         <div class="movie-info">
           <h2>{{ f.titulo }}</h2>
           <p><strong>Gênero:</strong> {{ f.genero }}</p>
           <p><strong>Ano:</strong> {{ f.anoLancamento }}</p>
-          <p><strong>Nota:</strong> {{ f.notaMedia.toFixed(1) }} ⭐</p>
+          <p><strong>Nota:</strong> {{ f.notaMedia?.toFixed(1) ?? '–' }} ⭐</p>
         </div>
       </a>
     </div>
     <div *ngIf="!filmes.length" class="sem-filmes">Nenhum filme encontrado.</div>
     <div class="pagination">
-      <button (click)="prevPage()" [disabled]="currentPage===1">Anterior</button>
+      <button (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
       <span>Página {{ currentPage }}</span>
-      <button (click)="nextPage()" [disabled]="filmes.length<itemsPerPage">Próxima</button>
+      <button (click)="nextPage()" [disabled]="filmes.length < itemsPerPage">Próxima</button>
     </div>
   </div>
 </section>

@@ -50,7 +50,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
       map(([search, genero]) => {
         let lista = this.fullFilmes;
         if (search) {
-          lista = lista.filter(f => f.titulo.toLowerCase().includes(search.toLowerCase()));
+          lista = lista.filter(f =>
+            f.titulo.toLowerCase().includes(search.toLowerCase())
+          );
         }
         if (genero) {
           lista = lista.filter(f =>
@@ -75,7 +77,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   async ngAfterViewInit(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
       const { default: Carousel } = await import('bootstrap/js/dist/carousel');
-      new Carousel(this.carouselEl.nativeElement, { interval:3000, ride:'carousel', wrap:true });
+      new Carousel(this.carouselEl.nativeElement, {
+        interval: 3000,
+        ride: 'carousel',
+        wrap: true
+      });
     }
   }
 
