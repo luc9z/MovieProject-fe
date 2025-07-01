@@ -56,25 +56,66 @@
 .search-filter {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 1rem;
+  justify-content: center;
+  margin: 2rem 0 1rem;
+  width: 100%;
+  max-width: 600px;
+  padding: 0 1rem;
 }
+
 .search-filter input,
 .search-filter select {
-  padding: 0.67rem 1rem;
+  flex: 1 1 200px;
+  min-width: 150px;
+  max-width: 300px;
+  height: 48px;
+  padding: 0 1rem;
   font-size: 1rem;
-  border-radius: 9px;
-  border: none;
+  border-radius: 12px;
+  border: 1px solid #343550;
   background: #212334;
-  color: #fff;
-  max-width: 250px;
-  width: 100%;
-  box-shadow: 0 2px 12px #191b2141;
-  transition: box-shadow 0.2s;
+  color: #e0e0e0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
 }
+
+.search-filter input::placeholder,
+.search-filter select {
+  color: #a0a0b2;
+}
+
 .search-filter input:focus,
 .search-filter select:focus {
-  box-shadow: 0 0 0 2px #725bde88;
+  outline: none;
+  border-color: #725bde;
+  background: #2a2c3f;
+  box-shadow: 0 0 0 3px rgba(114,91,222,0.3);
+}
+
+.search-filter select {
+  background-image:
+    url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2210%22%20height%3D%226%22%20viewBox%3D%220%200%2010%206%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M0%200l5%206%205-6z%22%20fill%3D%22%23a0a0b2%22/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 10px 6px;
+}
+
+@media (max-width: 600px) {
+  .search-filter {
+    margin: 1.5rem 0;
+    gap: 0.7rem;
+  }
+
+  .search-filter input,
+  .search-filter select {
+    height: 40px;
+    font-size: 0.95rem;
+    padding: 0 0.8rem;
+    border-radius: 8px;
+  }
 }
 .movies-grid {
   display: grid;

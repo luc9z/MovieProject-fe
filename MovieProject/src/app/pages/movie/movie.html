@@ -1,21 +1,39 @@
-<section class="movie-detail-container" *ngIf="filme$ | async as filme; else loading">
+<ng-template #loading>
+  <h1>Carregando filme...</h1>
+</ng-template>
+
+<section
+  class="movie-detail-container"
+  *ngIf="filme$ | async as filme; else loading"
+>
   <div class="movie-detail-card">
-    <img [src]="filme.imagemUrl" alt="{{ filme.titulo }}" class="movie-detail-image" />
+    <img
+      [src]="filme.imagemUrl"
+      alt="{{ filme.titulo }}"
+      class="movie-detail-image"
+    />
     <div class="movie-detail-info">
       <h1>{{ filme.titulo }}</h1>
       <div class="movie-detail-meta">
         <p><strong>Gênero:</strong> {{ filme.genero }}</p>
         <p><strong>Ano:</strong> {{ filme.anoLancamento }}</p>
-        <p><strong>Nota:</strong> {{ filme.notaMedia.toFixed(1) }} <span style="color:gold">⭐</span></p>
+        <p>
+          <strong>Nota:</strong>
+          {{ filme.notaMedia?.toFixed(1) ?? '–' }}
+          <span style="color: gold">⭐</span>
+        </p>
         <button
           type="button"
           class="btn-fav"
           [disabled]="carregandoFavorito || !estaLogado"
-          (click)="toggleFavorito(); $event.stopPropagation()">
+          (click)="toggleFavorito(); $event.stopPropagation()"
+        >
           <span *ngIf="!favoritado">🤍 Favoritar</span>
           <span *ngIf="favoritado">❤️ Desfavoritar</span>
         </button>
-        <span *ngIf="!estaLogado" class="login-msg">Entre ou registre-se para favoritar</span>
+        <span *ngIf="!estaLogado" class="login-msg">
+          Entre ou registre-se para favoritar
+        </span>
       </div>
       <div class="movie-detail-sinopse">
         <h2>Sinopse</h2>
@@ -24,26 +42,35 @@
     </div>
   </div>
 
-  <div *ngIf="estaLogado; else precisaLogin" class="avaliacao-form">
-    <h2>Avalie este filme</h2>
-    <div class="star-rating">
-      <ng-container *ngFor="let star of [1,2,3,4,5]">
-        <span
-          (click)="setNota(star)"
-          (mouseover)="hoverNota = star"
-          (mouseleave)="hoverNota = 0"
-          [class.filled]="star <= (hoverNota || avaliacaoNota)">
-          ★
-        </span>
-      </ng-container>
+  <ng-container *ngIf="estaLogado; else precisaLogin">
+    <div class="avaliacao-form">
+      <h2>Avalie este filme</h2>
+      <div class="star-rating">
+        <ng-container *ngFor="let star of [1,2,3,4,5]">
+          <span
+            (click)="setNota(star)"
+            (mouseover)="hoverNota = star"
+            (mouseleave)="hoverNota = 0"
+            [class.filled]="star <= (hoverNota || avaliacaoNota)"
+          >
+            ★
+          </span>
+        </ng-container>
+      </div>
+      <input [value]="usuarioNome" disabled />
+      <textarea
+        [(ngModel)]="avaliacaoComentario"
+        placeholder="Comentário"
+        maxlength="300"
+      ></textarea>
+      <button
+        (click)="enviarAvaliacao(filme.id)"
+        [disabled]="avaliacaoEnviando || !avaliacaoNota || !avaliacaoComentario"
+      >
+        Enviar Avaliação
+      </button>
     </div>
-    <input [value]="usuarioNome" disabled />
-    <textarea [(ngModel)]="avaliacaoComentario" placeholder="Comentário" maxlength="300"></textarea>
-    <button (click)="enviarAvaliacao(filme.id)"
-            [disabled]="avaliacaoEnviando || !avaliacaoNota || !avaliacaoComentario">
-      Enviar Avaliação
-    </button>
-  </div>
+  </ng-container>
   <ng-template #precisaLogin>
     <div class="avaliacao-login-aviso">
       <strong>Entre ou registre-se para avaliar o filme.</strong>
@@ -65,7 +92,3 @@
     </div>
   </div>
 </section>
-
-<ng-template #loading>
-  <h1>Carregando filme...</h1>
-</ng-template>
